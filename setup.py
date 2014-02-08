@@ -8,5 +8,10 @@ setup(name='bernoulli',
       author_email='joe.gasiorek@gmail.com',
       license='MIT',
       packages=['bernoulli'],
+      install_requires=[
+          'requests',
+      ],
+      test_suite='nose.collector',
+      tests_require=['nose'],
       zip_safe=False
       )
