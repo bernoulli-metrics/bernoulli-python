@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = 'http://localhost:8000/client/api/experiments/'
+BASE_URL = 'http://localhost:5000/client/api/experiments/'
 
 def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_necessary=True, user_data=None):
     """
@@ -18,13 +18,16 @@ def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_nece
     if type(experiment_ids) is dict:
         experiment_ids = ','.join(experiment_ids)
 
-    response = requests.get(BASE_URL, params={
-        'clientId': client_id,
-        'experimentsIds': experiment_ids,
-        'userId': user_id,
-        'bucketIfNecessary': bucket_if_necessary,
-        'userData': user_data,
-    })
+    try:
+        response = requests.get(BASE_URL, params={
+            'clientId': client_id,
+            'experimentIds': experiment_ids,
+            'userId': user_id,
+            'bucketIfNecessary': bucket_if_necessary,
+            'userData': user_data,
+        })
+    except requests.ConnectionError:
+        raise Exception("Unable to access service")
 
     val = response.json()
     if val['status'] != 'ok':
@@ -32,20 +35,22 @@ def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_nece
 
     return val['value']
 
-def record_goal_attained(client_id, experiment_id, variant_id, user_id):
+def record_goal_attained(client_id, experiment_id, user_id):
     """
     Record that a variant was successful for a user
     @param client_id : Bernoulli Client ID
     @param experiment_id : A single experiment id
-    @param variant_id : The ID of the variant that was successful
     @param user_id : An identifier for the user
     """
 
-    response = requests.get(BASE_URL + str(experiment_id), params={
-        'clientId': client_id,
-        'userId': user_id,
-        'variantId': variant_id,
-    })
+    try:
+        response = requests.post(BASE_URL, data={
+            'clientId': client_id,
+            'userId': user_id,
+            'experimentId': experiment_id,
+        })
+    except requests.ConnectionError:
+        raise Exception("Unable to access services")
 
     val = response.json()
     if val['status'] != 'ok':
