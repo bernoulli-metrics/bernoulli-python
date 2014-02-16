@@ -18,14 +18,15 @@ def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_nece
     if type(experiment_ids) is dict:
         experiment_ids = ','.join(experiment_ids)
 
+    params = {
+    'clientId': client_id,
+    'experimentIds': experiment_ids,
+    'userId': user_id,
+    'bucketIfNecessary': bucket_if_necessary,
+    }
+
     try:
-        response = requests.get(BASE_URL, params={
-            'clientId': client_id,
-            'experimentIds': experiment_ids,
-            'userId': user_id,
-            'bucketIfNecessary': bucket_if_necessary,
-            'userData': user_data,
-        })
+        response = requests.get(BASE_URL, params=dict(params.items() + user_data.items()))
     except requests.ConnectionError:
         raise Exception("Unable to access service")
 
