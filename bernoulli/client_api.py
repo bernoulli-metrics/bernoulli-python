@@ -26,6 +26,9 @@ def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_nece
         'bucketIfNecessary': bucket_if_necessary,
     }
 
+    if user_data is None:
+        user_data = {}
+
     try:
         response = requests.get(BASE_URL, params=dict(params.items() + user_data.items()))
     except requests.ConnectionError:
