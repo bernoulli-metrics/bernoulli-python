@@ -1,6 +1,7 @@
-import requests
+import requests, os
 
-BASE_URL = 'http://localhost:5000/client/api/experiments/'
+
+BASE_URL = 'https://bernoulli.herokuapp.com/client/api/experiments/'
 
 def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_necessary=True, user_data=None):
     """
@@ -19,10 +20,10 @@ def get_experiments(client_id, experiment_ids=None, user_id=None, bucket_if_nece
         experiment_ids = ','.join(experiment_ids)
 
     params = {
-    'clientId': client_id,
-    'experimentIds': experiment_ids,
-    'userId': user_id,
-    'bucketIfNecessary': bucket_if_necessary,
+        'clientId': client_id,
+        'experimentIds': experiment_ids,
+        'userId': user_id,
+        'bucketIfNecessary': bucket_if_necessary,
     }
 
     try:
