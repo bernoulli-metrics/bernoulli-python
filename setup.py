@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='bernoulli',
-      version='0.1',
+      version='0.1.1',
       description='A Python API for Bernoulli',
       url='https://github.com/bernoulli-metrics/bernoulli-python',
       author='Joe Gasiorek',
