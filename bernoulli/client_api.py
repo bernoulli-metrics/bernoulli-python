@@ -51,6 +51,12 @@ def record_goal_attained(client_id, experiment_id, user_id):
     @param user_id : An identifier for the user
     """
 
+    if not client_id:
+        client_id = os.environ.get('BERNOULLI_CLIENT_ID')
+
+    if not client_id:
+        raise Exception("client_id is required")
+
     try:
         response = requests.post(BASE_URL, data={
             'clientId': client_id,
