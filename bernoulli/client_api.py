@@ -3,12 +3,12 @@ import requests, os
 
 BASE_URL = 'https://bernoulli.herokuapp.com/client/api/experiments/'
 
-def get_experiments(client_id=None, experiment_ids=None, user_id=None, bucket_if_necessary=True, user_data=None):
+def get_experiments(experiment_ids=None, user_id=None, client_id=None, bucket_if_necessary=True, user_data=None):
     """
     Retrieve the experiments the user is a part of
-    @param client_id : Bernoulli Client ID - will default to BERNOULLI_CLIENT_ID ENV variable
     @param experiment_ids : Either a single or list of experiment ids to retreive
     @param user_id : An identifier for the user
+    @param client_id : Bernoulli Client ID - will default to BERNOULLI_CLIENT_ID ENV variable
     @param bucket_if_necessary : Choose a variant for the user if one has not been chosen
     @param user_data : Dictionary of user information to be used by the segment filters
     """
@@ -43,12 +43,12 @@ def get_experiments(client_id=None, experiment_ids=None, user_id=None, bucket_if
 
     return val['value']
 
-def record_goal_attained(client_id, experiment_id, user_id):
+def record_goal_attained(experiment_id, user_id, client_id = None):
     """
     Record that a variant was successful for a user
-    @param client_id : Bernoulli Client ID
     @param experiment_id : A single experiment id
     @param user_id : An identifier for the user
+    @param client_id : Bernoulli Client ID
     """
 
     if not client_id:

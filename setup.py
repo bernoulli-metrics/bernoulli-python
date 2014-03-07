@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='bernoulli',
-      version='0.1.5',
+      version='0.1.6',
       description='A Python API for Bernoulli',
       url='https://github.com/bernoulli-metrics/bernoulli-python',
       author='Joe Gasiorek',
@@ -12,6 +12,6 @@ setup(name='bernoulli',
           'requests',
       ],
       test_suite='nose.collector',
-      tests_require=['nose'],
+      tests_require=['nose', 'httmock'],
       zip_safe=False
       )
